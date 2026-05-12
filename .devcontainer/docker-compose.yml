@@ -1,0 +1,14 @@
+services:
+  devcontainer:
+    build:
+      context: ./.devcontainer
+      dockerfile: Dockerfile
+    user: "1000:1000"
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace:cached
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    command: sleep infinity
+    depends_on:
+      - mlflow
