@@ -1,0 +1,24 @@
+services:
+  mlflow:
+    image: python:3.11-slim
+    working_dir: /app
+    command: >
+      sh -c "pip install --no-cache-dir mlflow==2.14.3 && mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlruns"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data/mlflow:/app
+      - ./data/artifacts:/mlruns
+
+  notebook:
+    image: jupyter/scipy-notebook:python-3.11
+    command: >
+      bash -lc "pip install --no-cache-dir mlflow==2.14.3 && start-notebook.py"
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    depends_on:
+      - mlflow
