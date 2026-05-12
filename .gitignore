@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MLflow / Jupyter persistent data (host-mounted volumes)
+data/

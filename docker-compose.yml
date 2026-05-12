@@ -13,9 +13,10 @@ services:
   notebook:
     image: jupyter/scipy-notebook:python-3.11
     command: >
-      bash -lc "pip install --no-cache-dir mlflow==2.14.3 && start-notebook.py"
+      bash -lc "pip install --no-cache-dir mlflow==2.14.3 && start-notebook.py --IdentityProvider.token='' --ServerApp.password='' --ServerApp.disable_check_xsrf=True"
     environment:
       MLFLOW_TRACKING_URI: http://mlflow:5000
+      JUPYTER_TOKEN: ""
     ports:
       - "8888:8888"
     volumes:
